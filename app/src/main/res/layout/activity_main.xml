@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#a1a1a1"
+    tools:context="library.component.itc.basecomponent.MainActivity">
+
+    <bk.itc.html5.mylib.component.view.setting.SettingView
+        android:id="@+id/setting_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </bk.itc.html5.mylib.component.view.setting.SettingView>
+
+    <bk.itc.html5.mylib.component.view.recycler.MyRecyclerView
+        android:id="@+id/my_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </bk.itc.html5.mylib.component.view.recycler.MyRecyclerView>
+
+    <bk.itc.html5.mylib.component.view.gridnavigation.GridNavigation
+        android:id="@+id/my_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:visibility="gone">
+
+    </bk.itc.html5.mylib.component.view.gridnavigation.GridNavigation>
+
+    <bk.itc.html5.mylib.component.view.topicview.TopicView
+        android:id="@+id/my_topic_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </bk.itc.html5.mylib.component.view.topicview.TopicView>
+
+</android.support.constraint.ConstraintLayout>
