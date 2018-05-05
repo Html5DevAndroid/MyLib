@@ -16,6 +16,7 @@ import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 import java.util.ArrayList;
 import java.util.List;
 
+import bk.itc.html5.mylib.component.util.DrawableUtil;
 import bk.itc.html5.mylib.component.view.gridnavigation.GridNavigation;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerAdapter;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerView;
@@ -129,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void init3() {
         GridNavigation navigation = (GridNavigation) findViewById(R.id.my_grid);
+        navigation.setBackground(DrawableUtil.createBackground(Color.WHITE, 5, 0, Color.WHITE));
         navigation.addItem("bitcoin dump", R.drawable.xx, new GridNavigation.GridListener() {
             @Override
             public void onClick() {

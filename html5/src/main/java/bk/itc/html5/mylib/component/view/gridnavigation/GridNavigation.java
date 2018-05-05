@@ -1,6 +1,7 @@
 package bk.itc.html5.mylib.component.view.gridnavigation;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.util.AttributeSet;
@@ -24,6 +25,7 @@ import bk.itc.html5.mylib.component.view.recycler.MyViewHolder;
 
 public class GridNavigation extends MyRecyclerView {
     private List<Item> mItems = new ArrayList<>();
+    private Drawable mDrawable;
 
     public GridNavigation(Context context) {
         super(context);
@@ -48,6 +50,10 @@ public class GridNavigation extends MyRecyclerView {
                 View view = View.inflate(getContext(), R.layout.grid_nav_item, null);
                 final MyViewHolder myViewHolder = new MyViewHolder(view);
 
+                if(mDrawable != null) {
+                    view.findViewById(R.id.grid_item_layout).setBackground(mDrawable);
+                }
+
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -70,6 +76,10 @@ public class GridNavigation extends MyRecyclerView {
                 textView.setText(mItems.get(position).title);
             }
         });
+    }
+
+    public void setBackground(Drawable drawable) {
+        mDrawable = drawable;
     }
 
     public void addItem(String title, int imageId, GridListener listener) {
