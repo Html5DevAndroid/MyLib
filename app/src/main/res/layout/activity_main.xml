@@ -35,11 +35,4 @@
 
     </bk.itc.html5.mylib.component.view.topicview.TopicView>
 
-    <bk.itc.html5.mylib.component.view.switcher.SwitcherView
-        android:id="@+id/my_switcher_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </bk.itc.html5.mylib.component.view.switcher.SwitcherView>
-
 </android.support.constraint.ConstraintLayout>
