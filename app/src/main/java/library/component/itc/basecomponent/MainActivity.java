@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
         TopicView topicView = (TopicView) findViewById(R.id.my_topic_view);
         topicView.addItem("Tiếng Anh 123", R.drawable.english, null);
+        topicView.configText(Color.BLACK, 12);
+        topicView.configTextAlign(TopicView.TEXT_LEFT);
     }
 
     private void init1() {

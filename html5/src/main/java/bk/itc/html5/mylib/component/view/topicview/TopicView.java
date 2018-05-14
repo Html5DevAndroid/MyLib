@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,12 @@ public class TopicView extends MyRecyclerView {
     private int mStroke = 0;
     private int mStrokeColor = Color.WHITE;
     private int mImageSize = 60;
+    private int mTextSize = 18;
+    private int mTextRule = -100;
+
+    public static int TEXT_LEFT = 1;
+    public static int TEXT_CENTER = 0;
+    public static int TEXT_RIGHT = -1;
 
     public TopicView(Context context) {
         super(context);
@@ -67,7 +74,21 @@ public class TopicView extends MyRecyclerView {
                 TextView textView = (TextView) view.findViewById(R.id.topic_item_title);
                 ViewGroup layout = (ViewGroup) view.findViewById(R.id.topic_item_layout);
 
+                if(mTextRule != -100) {
+                    RelativeLayout.LayoutParams textParams = (RelativeLayout.LayoutParams) textView.getLayoutParams();
+                    textParams.removeRule(RelativeLayout.END_OF);
+                    textParams.removeRule(RelativeLayout.CENTER_HORIZONTAL);
+                    textParams.removeRule(RelativeLayout.ALIGN_PARENT_END);
+
+                    if(mTextRule == RelativeLayout.END_OF) {
+                        textParams.addRule(mTextRule, R.id.topic_item_icon);
+                    }else {
+                        textParams.addRule(mTextRule, RelativeLayout.TRUE);
+                    }
+                }
+
                 textView.setTextColor(mTextColor);
+                textView.setTextSize(mTextSize);
                 layout.setBackground(DrawableUtil.createBackground(mBackgroundColor, mBackgroundRadius, mStroke, mStrokeColor));
 
                 view.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +116,7 @@ public class TopicView extends MyRecyclerView {
         });
     }
 
-    public void config(int textColor, int  backgroundColor, int backgroundRadius) {
-        mTextColor = textColor;
+    public void config(int  backgroundColor, int backgroundRadius) {
         mBackgroundColor = backgroundColor;
         mBackgroundRadius = backgroundRadius;
 
@@ -106,6 +126,29 @@ public class TopicView extends MyRecyclerView {
     public void configStroke(int stroke, int strokeColor) {
         mStroke = stroke;
         mStrokeColor = strokeColor;
+
+        setSize(mItems.size());
+    }
+
+    public void configTextAlign(int align) {
+        if(align == TEXT_LEFT) {
+            mTextRule = RelativeLayout.END_OF;
+        }
+
+        if(align == TEXT_CENTER) {
+            mTextRule = RelativeLayout.CENTER_HORIZONTAL;
+        }
+
+        if(align == TEXT_RIGHT) {
+            mTextRule = RelativeLayout.ALIGN_PARENT_END;
+        }
+
+        setSize(mItems.size());
+    }
+
+    public void configText(int textColor, int textSize) {
+        mTextColor = textColor;
+        mTextSize = textSize;
 
         setSize(mItems.size());
     }
