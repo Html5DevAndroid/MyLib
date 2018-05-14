@@ -77,7 +77,12 @@ public class SwitcherView extends CoordinatorLayout {
     }
 
     public View getTopView() {
-        return getChildAt(getChildCount()-1);
+        for (int i=getChildCount()-1; i>=0; i--) {
+            View view = getChildAt(i);
+            if(view.getVisibility() == VISIBLE)
+                return view;
+        }
+        return null;
     }
 
     public void replaceWithSlideAndFade(View view, int duration, int dir, final boolean isRemove) {
