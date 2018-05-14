@@ -20,6 +20,7 @@ import bk.itc.html5.mylib.component.view.recycler.MyRecyclerView;
 import bk.itc.html5.mylib.component.view.recycler.MyViewHolder;
 import bk.itc.html5.mylib.component.view.setting.SettingView;
 import bk.itc.html5.mylib.component.view.switcher.SwitcherView;
+import bk.itc.html5.mylib.component.view.topicview.TopicView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,32 +29,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SwitcherView switcherView = (SwitcherView) findViewById(R.id.my_switcher_view);
-        Button button = new Button(this);
-        button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        button.setText("Fuck 1");
-        button.setBackgroundColor(Color.WHITE);
-        switcherView.addView(button);
-
-        Button button2 = new Button(this);
-        button2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        button2.setText("Fuck 2");
-        button2.setBackgroundColor(Color.WHITE);
-        switcherView.addView(button2);
-
-        Button button3 = new Button(this);
-        button3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        button3.setText("Fuck 3");
-        button3.setBackgroundColor(Color.GREEN);
-        switcherView.addView(button3);
-
-        Button button4 = new Button(this);
-        button4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        button4.setText("Fuck 4");
-        button4.setBackgroundColor(Color.RED);
-        switcherView.addView(button4);
-
-        switcherView.addViewWithSlide(button3, SwitcherView.DIR_RIGHT, 1000);
+        TopicView topicView = (TopicView) findViewById(R.id.my_topic_view);
+        topicView.addItem("Tiếng Anh 123", R.drawable.english, null);
     }
 
     private void init1() {
@@ -164,5 +141,34 @@ public class MainActivity extends AppCompatActivity {
         navigation.addItem("bitcoin down", R.drawable.xx, null);
         navigation.addItem("bitcoin down", R.drawable.xx, null);
         navigation.addItem("bitcoin down", R.drawable.xx, null);
+    }
+
+    private void init4() {
+        SwitcherView switcherView = (SwitcherView) findViewById(R.id.my_switcher_view);
+        Button button = new Button(this);
+        button.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        button.setText("Fuck 1");
+        button.setBackgroundColor(Color.WHITE);
+        switcherView.addView(button);
+
+        Button button2 = new Button(this);
+        button2.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        button2.setText("Fuck 2");
+        button2.setBackgroundColor(Color.WHITE);
+        switcherView.addView(button2);
+
+        Button button3 = new Button(this);
+        button3.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        button3.setText("Fuck 3");
+        button3.setBackgroundColor(Color.GREEN);
+        switcherView.addView(button3);
+
+        Button button4 = new Button(this);
+        button4.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        button4.setText("Fuck 4");
+        button4.setBackgroundColor(Color.RED);
+        switcherView.addView(button4);
+
+        switcherView.addViewWithSlide(button3, SwitcherView.DIR_RIGHT, 1000);
     }
 }

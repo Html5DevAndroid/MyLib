@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bk.itc.html5.mylib.R;
+import bk.itc.html5.mylib.component.util.DimenUtil;
 import bk.itc.html5.mylib.component.util.DrawableUtil;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerAdapter;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerView;
@@ -32,6 +33,7 @@ public class TopicView extends MyRecyclerView {
     private int mBackgroundRadius = 3;
     private int mStroke = 0;
     private int mStrokeColor = Color.WHITE;
+    private int mImageSize = 60;
 
     public TopicView(Context context) {
         super(context);
@@ -55,6 +57,12 @@ public class TopicView extends MyRecyclerView {
             public MyViewHolder onCreateView() {
                 View view = View.inflate(getContext(), R.layout.topic_item, null);
                 final MyViewHolder myViewHolder = new MyViewHolder(view);
+
+                ImageView icon = (ImageView) view.findViewById(R.id.topic_item_icon);
+                ViewGroup.LayoutParams params = icon.getLayoutParams();
+                int pxSize = (int)DimenUtil.pxFromDp(mImageSize);
+                params.width = pxSize;
+                params.height = pxSize;
 
                 TextView textView = (TextView) view.findViewById(R.id.topic_item_title);
                 ViewGroup layout = (ViewGroup) view.findViewById(R.id.topic_item_layout);
@@ -98,6 +106,13 @@ public class TopicView extends MyRecyclerView {
     public void configStroke(int stroke, int strokeColor) {
         mStroke = stroke;
         mStrokeColor = strokeColor;
+
+        setSize(mItems.size());
+    }
+
+    public void configImageSize(int size) {
+        mImageSize = size;
+
         setSize(mItems.size());
     }
 
