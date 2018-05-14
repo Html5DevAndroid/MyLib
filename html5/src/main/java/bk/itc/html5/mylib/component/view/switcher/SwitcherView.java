@@ -65,6 +65,8 @@ public class SwitcherView extends CoordinatorLayout {
                 v.setVisibility(GONE);
             }
         }
+
+        bringChildToFront(view);
     }
 
     public void turnOffAll() {
