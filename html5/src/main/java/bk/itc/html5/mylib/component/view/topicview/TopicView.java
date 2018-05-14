@@ -164,6 +164,11 @@ public class TopicView extends MyRecyclerView {
         setSize(mItems.size());
     }
 
+    public void clear() {
+        mItems = new ArrayList<>();
+        setSize(mItems.size());
+    }
+
     public class Item {
         int iconId;
         String title;
