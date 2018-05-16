@@ -21,6 +21,8 @@ public class SwitcherView extends CoordinatorLayout {
     public static final int DIR_DOWN = 3;
     public static final int DIR_UP = 4;
 
+    private boolean mIsAnimating = false;
+
     public SwitcherView(@NonNull Context context) {
         super(context);
         init();
@@ -99,6 +101,8 @@ public class SwitcherView extends CoordinatorLayout {
             turnOn(view);
         }
 
+        mIsAnimating = true;
+
         animFade(top, view, duration, null);
 
         animSlide(top, view, dir, duration, new AnimationListener.Stop() {
@@ -111,6 +115,8 @@ public class SwitcherView extends CoordinatorLayout {
                     top.setX(0);
                     top.setY(0);
                 }
+
+                mIsAnimating = false;
             }
         });
     }
@@ -129,6 +135,8 @@ public class SwitcherView extends CoordinatorLayout {
             turnOn(view);
         }
 
+        mIsAnimating = true;
+
         animFade(top, view, duration, new AnimationListener.Stop() {
             @Override
             public void onStop() {
@@ -137,6 +145,8 @@ public class SwitcherView extends CoordinatorLayout {
                 }else {
                     turnOff(top);
                 }
+
+                mIsAnimating = false;
             }
         });
     }
@@ -174,10 +184,14 @@ public class SwitcherView extends CoordinatorLayout {
             bringChildToFront(view);
         }
 
+        mIsAnimating = true;
+
         animSlideSingle(view, dir, duration, new AnimationListener.Stop() {
             @Override
             public void onStop() {
                 turnOffOther(view);
+
+                mIsAnimating = false;
             }
         });
     }
@@ -242,6 +256,8 @@ public class SwitcherView extends CoordinatorLayout {
             turnOn(view);
         }
 
+        mIsAnimating = true;
+
         animSlide(top, view, dir, duration, new AnimationListener.Stop() {
             @Override
             public void onStop() {
@@ -252,6 +268,8 @@ public class SwitcherView extends CoordinatorLayout {
                     top.setX(0);
                     top.setY(0);
                 }
+
+                mIsAnimating = false;
             }
         });
     }
@@ -316,5 +334,9 @@ public class SwitcherView extends CoordinatorLayout {
                     .duration(time)
                     .start();
         }
+    }
+
+    public boolean isAnimating() {
+        return mIsAnimating;
     }
 }
