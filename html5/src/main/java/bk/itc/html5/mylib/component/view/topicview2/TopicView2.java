@@ -36,6 +36,7 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class TopicView2 extends MyRecyclerView {
     private List<Item2> mItems = new ArrayList<>();
     private Drawable mBackground;
+    private int mBackgroundColor;
     private int mTitleSize;
     private int mSnippetSize;
     private int mTitleColor;
@@ -59,6 +60,7 @@ public class TopicView2 extends MyRecyclerView {
 
     private void configDefault() {
         mBackground = DrawableUtil.createBackground(Color.WHITE, 3, 0, Color.BLACK);
+        mBackgroundColor = Color.WHITE;
         mTitleSize = 15;
         mTitleColor = Color.BLACK;
         mSnippetSize = 13;
@@ -82,6 +84,12 @@ public class TopicView2 extends MyRecyclerView {
 
     public void configBackground(Drawable drawable) {
         mBackground = drawable;
+
+        setSize(mItems.size());
+    }
+
+    public void configBackgroundColor(int color) {
+        mBackgroundColor = color;
 
         setSize(mItems.size());
     }
@@ -110,7 +118,7 @@ public class TopicView2 extends MyRecyclerView {
                 TextView title = (TextView) view.findViewById(R.id.topic_item_2_title);
                 TextView snippet = (TextView) view.findViewById(R.id.topic_item_2_snippet);
 
-                layout.setBackground(mBackground);
+                layout.setBackgroundColor(mBackgroundColor);
                 title.setTextSize(mTitleSize);
                 title.setTextColor(mTitleColor);
                 snippet.setTextColor(mSnippetColor);

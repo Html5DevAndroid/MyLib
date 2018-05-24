@@ -195,7 +195,10 @@ public class MainActivity extends AppCompatActivity {
         TopicView2 topicView = (TopicView2) findViewById(R.id.my_topic_view_2);
         topicView.addItem("https://i.pinimg.com/originals/c2/4b/e8/c24be8b914079df7aad2e3fb267d40f7.jpg",
                 "The first thing to do",
-                "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !",
+                "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !" +
+                        "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !" +
+                        "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !"
+                ,
                 null);
         topicView.addItem("https://i.pinimg.com/originals/c2/4b/e8/c24be8b914079df7aad2e3fb267d40f7.jpg",
                 "The first thing to do",
