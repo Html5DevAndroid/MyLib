@@ -13,14 +13,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import bk.itc.html5.mylib.component.data.MyFile;
 import bk.itc.html5.mylib.component.util.DrawableUtil;
 import bk.itc.html5.mylib.component.view.gridnavigation.GridNavigation;
+import bk.itc.html5.mylib.component.view.quiz.QuizAnswerModel;
+import bk.itc.html5.mylib.component.view.quiz.QuizModel;
+import bk.itc.html5.mylib.component.view.quiz.QuizView;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerAdapter;
 import bk.itc.html5.mylib.component.view.recycler.MyRecyclerView;
 import bk.itc.html5.mylib.component.view.recycler.MyViewHolder;
 import bk.itc.html5.mylib.component.view.setting.SettingView;
 import bk.itc.html5.mylib.component.view.switcher.SwitcherView;
 import bk.itc.html5.mylib.component.view.topicview.TopicView;
+import bk.itc.html5.mylib.component.view.topicview2.TopicView2;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,10 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TopicView topicView = (TopicView) findViewById(R.id.my_topic_view);
-        topicView.addItem("Tiếng Anh 123", R.drawable.english, null);
-        topicView.configText(Color.BLACK, 12);
-        topicView.configTextAlign(TopicView.TEXT_LEFT);
+        init7();
     }
 
     private void init1() {
@@ -171,6 +173,33 @@ public class MainActivity extends AppCompatActivity {
         button4.setBackgroundColor(Color.RED);
         switcherView.addView(button4);
 
-        switcherView.addViewWithSlide(button3, SwitcherView.DIR_RIGHT, 1000);
+        switcherView.replaceWithAnim(button3, SwitcherView.SLIDE_DIR_RIGHT_ADD, 1000, false);
+    }
+
+    private void init5() {
+        TopicView topicView = (TopicView) findViewById(R.id.my_topic_view);
+        topicView.addItem("Tiếng Anh 123", R.drawable.english, null);
+        topicView.configText(Color.BLACK, 12);
+        topicView.configTextAlign(TopicView.TEXT_LEFT);
+    }
+
+    private void init6() {
+        QuizView quizView = (QuizView) findViewById(R.id.my_quiz_view);
+        quizView.setMode(QuizView.MODE_SINGLE_CHOICE);
+
+        quizView.read(MyFile.readFile(R.raw.quiz));
+        quizView.goTo(0);
+    }
+
+    private void init7() {
+        TopicView2 topicView = (TopicView2) findViewById(R.id.my_topic_view_2);
+        topicView.addItem("https://i.pinimg.com/originals/c2/4b/e8/c24be8b914079df7aad2e3fb267d40f7.jpg",
+                "The first thing to do",
+                "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !",
+                null);
+        topicView.addItem("https://i.pinimg.com/originals/c2/4b/e8/c24be8b914079df7aad2e3fb267d40f7.jpg",
+                "The first thing to do",
+                "Em có 2 activity A và B,em startactivity từ A qua B, ở B em insert data và nhảy về lại A, vậy cho em hỏi làm sao để update lại data trong adpater ở Activity A.em sử dụng recycleview. ở B em có startActivityForResult nhưng không được. Em cảm ơn !",
+                null);
     }
 }

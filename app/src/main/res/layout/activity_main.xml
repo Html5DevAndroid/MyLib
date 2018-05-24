@@ -42,4 +42,20 @@
 
     </bk.itc.html5.mylib.component.view.switcher.SwitcherView>
 
+    <bk.itc.html5.mylib.component.view.quiz.QuizView
+        android:id="@+id/my_quiz_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:padding="10dp">
+
+    </bk.itc.html5.mylib.component.view.quiz.QuizView>
+
+    <bk.itc.html5.mylib.component.view.topicview2.TopicView2
+        android:id="@+id/my_topic_view_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+    </bk.itc.html5.mylib.component.view.topicview2.TopicView2>
 </android.support.constraint.ConstraintLayout>

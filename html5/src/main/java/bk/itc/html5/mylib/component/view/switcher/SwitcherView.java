@@ -16,10 +16,15 @@ import com.github.florent37.viewanimator.ViewAnimator;
  */
 
 public class SwitcherView extends CoordinatorLayout {
-    public static final int DIR_LEFT = 1;
-    public static final int DIR_RIGHT = 2;
-    public static final int DIR_DOWN = 3;
-    public static final int DIR_UP = 4;
+    public static final int SLIDE_DIR_LEFT = 1;
+    public static final int SLIDE_DIR_RIGHT = 2;
+    public static final int SLIDE_DIR_DOWN = 3;
+    public static final int SLIDE_DIR_UP = 4;
+    public static final int SLIDE_DIR_LEFT_ADD = 5;
+    public static final int SLIDE_DIR_RIGHT_ADD = 6;
+    public static final int SLIDE_DIR_DOWN_ADD = 7;
+    public static final int SLIDE_DIR_UP_ADD = 8;
+    public static final int FADE_OUT = 9;
 
     private boolean mIsAnimating = false;
 
@@ -87,7 +92,7 @@ public class SwitcherView extends CoordinatorLayout {
         return null;
     }
 
-    public void replaceWithSlideAndFade(View view, int duration, int dir, final boolean isRemove) {
+    public void replaceWithAnim(View view, int anim, int duration, final boolean isRemove) {
         final View top = getTopView();
         if(top == view) {
             return;
@@ -99,13 +104,12 @@ public class SwitcherView extends CoordinatorLayout {
         } else {
             turnOffOther(top);
             turnOn(view);
+            bringChildToFront(view);
         }
 
         mIsAnimating = true;
 
-        animFade(top, view, duration, null);
-
-        animSlide(top, view, dir, duration, new AnimationListener.Stop() {
+        animateAnim(top, view, anim, duration, new AnimationListener.Stop() {
             @Override
             public void onStop() {
                 if(isRemove) {
@@ -121,176 +125,50 @@ public class SwitcherView extends CoordinatorLayout {
         });
     }
 
-    public void replaceWithFade(View view, int duration, final boolean isRemove) {
-        final View top = getTopView();
-        if(top == view) {
-            return;
-        }
-
-        if(indexOfChild(view) < 0) {
-            turnOffOther(top);
-            addView(view);
-        } else {
-            turnOffOther(top);
-            turnOn(view);
-        }
-
-        mIsAnimating = true;
-
-        animFade(top, view, duration, new AnimationListener.Stop() {
-            @Override
-            public void onStop() {
-                if(isRemove) {
-                    removeView(top);
-                }else {
-                    turnOff(top);
-                }
-
-                mIsAnimating = false;
-            }
-        });
-    }
-
-    private void animFade(final View viewOut, final View viewIn, final int duration, final AnimationListener.Stop listener) {
+    private void animateAnim(final View viewOut, final View viewIn, final int anim, final int duration, final AnimationListener.Stop listener) {
         if (getWidth() > 0) {
-            animFadeRun(viewOut, viewIn, duration, listener);
+            runAnim(viewOut, viewIn, anim, duration, listener);
         }else {
             getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
                 public void onGlobalLayout() {
-                    animFadeRun(viewOut, viewIn, duration, listener);
+                    runAnim(viewOut, viewIn, anim, duration, listener);
                     getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 }
             });
         }
     }
 
-    private void animFadeRun(View viewOut, View viewIn, int duration, AnimationListener.Stop listener) {
-        ViewAnimator.animate(viewOut)
-                .alpha(1, 0)
-                .duration(duration)
-                .onStop(listener)
-                .start();
-        ViewAnimator.animate(viewIn)
-                .alpha(0, 1)
-                .duration(duration)
-                .start();
-    }
-
-    public void addViewWithSlide(final View view, int dir, int duration) {
-        if(indexOfChild(view) < 0) {
-            addView(view);
-        } else {
-            bringChildToFront(view);
-        }
-
-        mIsAnimating = true;
-
-        animSlideSingle(view, dir, duration, new AnimationListener.Stop() {
-            @Override
-            public void onStop() {
-                turnOffOther(view);
-
-                mIsAnimating = false;
-            }
-        });
-    }
-
-    private void animSlideSingle(final View viewIn, final int dir, final int duration, final AnimationListener.Stop listener) {
-        if (getWidth() > 0) {
-            animSlideSingleRun(viewIn, dir, duration, listener);
-        }else {
-            getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    animSlideSingleRun(viewIn, dir, duration, listener);
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-        }
-    }
-
-    private void animSlideSingleRun(View viewIn, int dir, int time, AnimationListener.Stop listener) {
-
-        if(dir == DIR_LEFT) {
+    private void runAnim(View viewOut, View viewIn, int anim, int time, AnimationListener.Stop listener) {
+        if(anim == SLIDE_DIR_LEFT_ADD) {
             ViewAnimator.animate(viewIn)
                     .translationX(getWidth(), 0)
                     .duration(time)
                     .onStop(listener)
                     .start();
         }
-        if(dir == DIR_RIGHT) {
+        if(anim == SLIDE_DIR_RIGHT_ADD) {
             ViewAnimator.animate(viewIn)
                     .translationX(-getWidth(), 0)
                     .duration(time)
                     .onStop(listener)
                     .start();
         }
-        if(dir == DIR_DOWN) {
+        if(anim == SLIDE_DIR_DOWN_ADD) {
             ViewAnimator.animate(viewIn)
                     .translationY(-getHeight(), 0)
                     .duration(time)
                     .onStop(listener)
                     .start();
         }
-        if(dir == DIR_UP) {
+        if(anim == SLIDE_DIR_UP_ADD) {
             ViewAnimator.animate(viewIn)
                     .translationY(getHeight(), 0)
                     .duration(time)
                     .onStop(listener)
                     .start();
         }
-    }
-
-    public void replaceWithSlide(View view, int dir, int duration, final boolean isRemove) {
-        final View top = getTopView();
-        if(top == view) {
-            return;
-        }
-
-        if(indexOfChild(view) < 0) {
-            turnOffOther(top);
-            addView(view);
-        } else {
-            turnOffOther(top);
-            turnOn(view);
-        }
-
-        mIsAnimating = true;
-
-        animSlide(top, view, dir, duration, new AnimationListener.Stop() {
-            @Override
-            public void onStop() {
-                if(isRemove) {
-                    removeView(top);
-                }else {
-                    turnOff(top);
-                    top.setX(0);
-                    top.setY(0);
-                }
-
-                mIsAnimating = false;
-            }
-        });
-    }
-
-    private void animSlide(final View viewOut, final View viewIn, final int dir, final int duration, final AnimationListener.Stop listener) {
-        if (getWidth() > 0) {
-            animSlideRun(viewOut, viewIn, dir, duration, listener);
-        }else {
-            getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @Override
-                public void onGlobalLayout() {
-                    animSlideRun(viewOut, viewIn, dir, duration, listener);
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                }
-            });
-        }
-    }
-
-    private void animSlideRun(View viewOut, View viewIn, int dir, int time, AnimationListener.Stop listener) {
-
-        if(dir == DIR_LEFT) {
+        if(anim == SLIDE_DIR_LEFT) {
             ViewAnimator.animate(viewOut)
                     .translationX(0, -getWidth())
                     .duration(time)
@@ -301,7 +179,7 @@ public class SwitcherView extends CoordinatorLayout {
                     .duration(time)
                     .start();
         }
-        if(dir == DIR_RIGHT) {
+        if(anim == SLIDE_DIR_RIGHT) {
             ViewAnimator.animate(viewOut)
                     .translationX(0, getWidth())
                     .duration(time)
@@ -312,7 +190,7 @@ public class SwitcherView extends CoordinatorLayout {
                     .duration(time)
                     .start();
         }
-        if(dir == DIR_DOWN) {
+        if(anim == SLIDE_DIR_DOWN) {
             ViewAnimator.animate(viewOut)
                     .translationY(0, getHeight())
                     .duration(time)
@@ -323,7 +201,7 @@ public class SwitcherView extends CoordinatorLayout {
                     .duration(time)
                     .start();
         }
-        if(dir == DIR_UP) {
+        if(anim == SLIDE_DIR_UP) {
             ViewAnimator.animate(viewOut)
                     .translationY(0, -getHeight())
                     .duration(time)
@@ -331,6 +209,17 @@ public class SwitcherView extends CoordinatorLayout {
                     .start();
             ViewAnimator.animate(viewIn)
                     .translationY(getHeight(), 0)
+                    .duration(time)
+                    .start();
+        }
+        if(anim == FADE_OUT) {
+            ViewAnimator.animate(viewOut)
+                    .alpha(1, 0)
+                    .duration(time)
+                    .onStop(listener)
+                    .start();
+            ViewAnimator.animate(viewIn)
+                    .alpha(0, 1)
                     .duration(time)
                     .start();
         }

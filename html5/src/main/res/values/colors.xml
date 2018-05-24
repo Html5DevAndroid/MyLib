@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="quiz_answer_true_bg">#68e9af</color>
+    <color name="quiz_answer_false_bg">#fd8684</color>
+</resources>

@@ -40,6 +40,8 @@ dependencies {
     implementation 'com.github.f0ris.sweetalert:library:1.5.3'
     implementation 'com.android.support:design:25.4.0'
     implementation 'com.github.florent37:viewanimator:1.0.5'
+    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.github.medyo:fancybuttons:1.8.4'
 }
 
 configurations.all {

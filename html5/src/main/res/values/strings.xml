@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Html5Lib</string>
+    <string name="quiz_btn_previous">Previous</string>
+    <string name="quiz_btn_Done">Done</string>
+    <string name="quiz_btn_Next">Next</string>
+    <string name="topic2_action_button">Read More</string>
 </resources>
