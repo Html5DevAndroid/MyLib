@@ -45,6 +45,10 @@ public class QuizAdapter {
         return count;
     }
 
+    public int getTotalQuestion() {
+        return mQuizModels.size();
+    }
+
     public void addUserAnswer(int questionStt, int answerId) {
         QuizModel quizModel = getAt(questionStt);
         if(quizModel == null)
@@ -74,6 +78,12 @@ public class QuizAdapter {
 
         for (int i=0; i<quizModel.getAnswers().size(); i++) {
             quizModel.getAnswers().get(i).setUserChoice(false);
+        }
+    }
+
+    public void clearAllUserAnswer() {
+        for (int i=0; i<mQuizModels.size(); i++) {
+            clearUserAnswer(i);
         }
     }
 

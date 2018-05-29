@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        init7();
+        init6();
     }
 
     private void init1() {
@@ -189,6 +189,13 @@ public class MainActivity extends AppCompatActivity {
 
         quizView.read(MyFile.readFile(R.raw.quiz));
         quizView.goTo(0);
+
+        quizView.setBackListener(new QuizView.BackListener() {
+            @Override
+            public void onBack() {
+                System.exit(0);
+            }
+        });
     }
 
     private void init7() {

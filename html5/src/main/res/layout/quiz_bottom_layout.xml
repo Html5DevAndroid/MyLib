@@ -2,46 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:padding="5dp">
 
-    <TextView
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/quiz_bottom_previous"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="@string/quiz_btn_previous"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"
-        android:textAlignment="center"
-        android:layout_marginStart="10dp"/>
+        android:layout_marginStart="10dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="#00b881"
+        fancy:fb_focusColor="#9bd823"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="10dp"
+        fancy:fb_textColor="#FFFFFF"
+        fancy:fb_text="Previous"/>
 
-    <TextView
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/quiz_bottom_next"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="@string/quiz_btn_Next"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:padding="15dp"
         android:paddingBottom="15dp"
-        android:textAlignment="center"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="#00b881"
+        fancy:fb_focusColor="#9bd823"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="10dp"
+        fancy:fb_textColor="#FFFFFF"
+        fancy:fb_text="Next"/>
 
-    <TextView
+    <mehdi.sakout.fancybuttons.FancyButton
         android:id="@+id/quiz_bottom_done"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:text="@string/quiz_btn_Done"
-        android:textColor="@android:color/black"
-        android:textSize="15sp"
-        android:textStyle="bold"
         android:padding="15dp"
         android:paddingBottom="15dp"
-        android:textAlignment="center"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        fancy:fb_borderColor="#FFFFFF"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="#00b881"
+        fancy:fb_focusColor="#9bd823"
+        fancy:fb_iconPosition="left"
+        fancy:fb_radius="10dp"
+        fancy:fb_textColor="#FFFFFF"
+        fancy:fb_text="Done"/>
 
 </RelativeLayout>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true"
+    android:focusable="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_margin="30dp">
+
+            <flepsik.github.com.progress_ring.ProgressRingView
+                android:id="@+id/quiz_result_ring"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:background_progress_color="@android:color/darker_gray"
+                app:progress_color="@android:color/holo_red_light"
+                app:background_color="@android:color/white"
+                app:progress="0"
+                app:ring_width="10dp"
+                app:corner_edges="true"
+                app:progress_fill="false"/>
+
+            <TextView
+                android:id="@+id/quiz_result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:textColor="@android:color/black" />
+
+            <TextView
+                android:id="@+id/quiz_result_achievement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/quiz_result_text"
+                android:layout_marginTop="5dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"/>
+
+        </RelativeLayout>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quiz_result_view_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#7ab800"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="10dp"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_text="View Answers">
+        </mehdi.sakout.fancybuttons.FancyButton>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quiz_result_retake"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#0068de"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="10dp"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_text="Retake The Test">
+        </mehdi.sakout.fancybuttons.FancyButton>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quiz_result_rate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#ed0000"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="10dp"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_text="Rate App">
+        </mehdi.sakout.fancybuttons.FancyButton>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/quiz_result_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:padding="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#9dc901"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="10dp"
+            fancy:fb_textColor="#FFFFFF"
+            fancy:fb_text="Go Back">
+        </mehdi.sakout.fancybuttons.FancyButton>
+
+    </LinearLayout>
+
+</ScrollView>

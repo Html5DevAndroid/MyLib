@@ -42,6 +42,7 @@ dependencies {
     implementation 'com.github.florent37:viewanimator:1.0.5'
     implementation 'com.google.code.gson:gson:2.8.4'
     implementation 'com.github.medyo:fancybuttons:1.8.4'
+    implementation 'com.github.flepsik:progress-ring-view:1.1.2'
 }
 
 configurations.all {

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,6 +24,7 @@ import java.util.List;
 import bk.itc.html5.mylib.R;
 import bk.itc.html5.mylib.component.util.DimenUtil;
 import bk.itc.html5.mylib.component.util.DrawableUtil;
+import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
  * Created by Hien on 5/19/2018.
@@ -38,9 +41,10 @@ public class QuizView extends RelativeLayout {
     private ScrollView mScrollView;
     private QuizAdapter mQuizAdapter;
 
-    private TextView prevBtn;
-    private TextView nextBtn;
-    private TextView doneBtn;
+    private FancyButton prevBtn;
+    private FancyButton nextBtn;
+    private FancyButton doneBtn;
+    private ResultView mResultView;
 
     private Drawable mTrueDrawable;
     private Drawable mFalseDrawable;
@@ -49,9 +53,14 @@ public class QuizView extends RelativeLayout {
     private boolean mIsShowResult;
 
     private int mMode = MODE_SINGLE_CHOICE;
-
     public static final int MODE_SINGLE_CHOICE = 1;
     public static final int MODE_MULTIPLE_CHOICE = 2;
+
+    private int mViewMode = VIEW_MOD_NORMAL;
+    public static final int VIEW_MOD_NORMAL = 1;
+    public static final int VIEW_MODE_RESULT = 2;
+
+    private BackListener mBackListener;
 
     public QuizView(Context context) {
         super(context);
@@ -90,6 +99,11 @@ public class QuizView extends RelativeLayout {
         mScrollView.setLayoutParams(scrollParams);
         addView(mScrollView);
 
+        mResultView = new ResultView(getContext());
+        mResultView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addView(mResultView);
+        mResultView.setVisibility(GONE);
+
         mLinerLayout = new LinearLayout(getContext());
         mLinerLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mLinerLayout.setOrientation(LinearLayout.VERTICAL);
@@ -98,6 +112,9 @@ public class QuizView extends RelativeLayout {
         mQuestionLayout = new LinearLayout(getContext());
         mQuestionLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mQuestionLayout.setOrientation(LinearLayout.VERTICAL);
+        int questionPadding = (int) DimenUtil.pxFromDp(10);
+        mQuestionLayout.setPadding(questionPadding, questionPadding, questionPadding, questionPadding);
+        mQuestionLayout.setBackground(DrawableUtil.createBackground(Color.WHITE, 3, 2, Color.BLACK));
         mLinerLayout.addView(mQuestionLayout);
 
         mAnswerLayout = new LinearLayout(getContext());
@@ -112,53 +129,117 @@ public class QuizView extends RelativeLayout {
         mQuestionContent = new TextView((getContext()));
         mQuestionContent.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mQuestionLayout.addView(mQuestionContent);
+
+        mResultView.setListener(new ResultView.Listener() {
+            @Override
+            public void onViewResult() {
+                mResultView.setVisibility(GONE);
+                mViewMode = VIEW_MODE_RESULT;
+                goToWithResult(0);
+            }
+
+            @Override
+            public void onRetake() {
+                mQuizAdapter.clearAllUserAnswer();
+                mResultView.setVisibility(GONE);
+                mViewMode = VIEW_MOD_NORMAL;
+                goTo(0);
+            }
+
+            @Override
+            public void onBack() {
+                if(mBackListener != null) {
+                    mBackListener.onBack();
+                }
+            }
+        });
+    }
+
+    public void setBackListener(BackListener listener) {
+        mBackListener = listener;
     }
 
     private void initBottomLayout() {
         View view = View.inflate(getContext(), R.layout.quiz_bottom_layout, null);
         mBottomLayout.addView(view);
 
-        prevBtn = (TextView) view.findViewById(R.id.quiz_bottom_previous);
-        nextBtn = (TextView) view.findViewById(R.id.quiz_bottom_next);
-        doneBtn = (TextView) view.findViewById(R.id.quiz_bottom_done);
+        prevBtn = (FancyButton) view.findViewById(R.id.quiz_bottom_previous);
+        nextBtn = (FancyButton) view.findViewById(R.id.quiz_bottom_next);
+        doneBtn = (FancyButton) view.findViewById(R.id.quiz_bottom_done);
 
-        prevBtn.setBackground(DrawableUtil.createBackground(Color.WHITE, 2, 1, Color.BLACK));
+        /*prevBtn.setBackground(DrawableUtil.createBackground(Color.WHITE, 2, 1, Color.BLACK));
         nextBtn.setBackground(DrawableUtil.createBackground(Color.WHITE, 2, 1, Color.BLACK));
-        doneBtn.setBackground(DrawableUtil.createBackground(Color.WHITE, 2, 1, Color.BLACK));
+        doneBtn.setBackground(DrawableUtil.createBackground(Color.WHITE, 2, 1, Color.BLACK));*/
 
         prevBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mQuizAdapter.getCurrentQuestion() == 0) {
+                    Toast.makeText(getContext(), "No More Question", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 mQuizAdapter.goPrevious();
-                goTo(mQuizAdapter.getCurrentQuestion());
+                if(mViewMode == VIEW_MOD_NORMAL) {
+                    goTo(mQuizAdapter.getCurrentQuestion());
+                }else {
+                    goToWithResult(mQuizAdapter.getCurrentQuestion());
+                }
             }
         });
 
         nextBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mQuizAdapter.getCurrentQuestion() == mQuizAdapter.getTotalQuestion() - 1) {
+                    Toast.makeText(getContext(), "No More Question", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 mQuizAdapter.goNext();
-                goTo(mQuizAdapter.getCurrentQuestion());
+                if(mViewMode == VIEW_MOD_NORMAL) {
+                    goTo(mQuizAdapter.getCurrentQuestion());
+                }else {
+                    goToWithResult(mQuizAdapter.getCurrentQuestion());
+                }
             }
         });
 
         doneBtn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                mResultView.setVisibility(VISIBLE);
+                mResultView.setResultValue(""+ mQuizAdapter.numberOfUserTrueAnswer() + "/" + mQuizAdapter.getTotalQuestion());
 
+                mResultView.setRingPercent(0.01f);
+                float percent = (float) mQuizAdapter.numberOfUserTrueAnswer() / mQuizAdapter.getTotalQuestion();
+                if(percent < 0.5f) {
+                    mResultView.setRingColor(Color.RED);
+                }else {
+                    mResultView.setRingColor(Color.BLUE);
+                }
+                mResultView.setRingPercent(percent);
+
+                if(percent < 0.5f) {
+                    mResultView.setAchievement("Poor");
+                } else if(percent < 0.8f) {
+                    mResultView.setAchievement("Good");
+                } else {
+                    mResultView.setAchievement("Excellent");
+                }
             }
         });
     }
 
-    public TextView getPrevBtn() {
+    public FancyButton getPrevBtn() {
         return prevBtn;
     }
 
-    public TextView getNextBtn() {
+    public FancyButton getNextBtn() {
         return nextBtn;
     }
 
-    public TextView getDoneBtn() {
+    public FancyButton getDoneBtn() {
         return doneBtn;
     }
 
@@ -246,6 +327,9 @@ public class QuizView extends RelativeLayout {
         quizAnswerView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(mViewMode == VIEW_MODE_RESULT)
+                    return;
+
                 int answerId = mAnswerViews.indexOf(view);
 
                 if(mMode == MODE_MULTIPLE_CHOICE) {
@@ -294,14 +378,14 @@ public class QuizView extends RelativeLayout {
     }
 
     public void goTo(int stt) {
-        QuizModel quizModel = mQuizAdapter.getAt(stt);
+        QuizModel quizModel = mQuizAdapter.goAt(stt);
         if(quizModel == null)
             return;
 
         mAnswerViews.clear();
         mAnswerLayout.removeAllViews();
 
-        setStt("Question " + String.valueOf(stt));
+        setStt("Question " + String.valueOf(stt+1));
         setQuestion(quizModel.getQuestionContent());
         for (int i=0; i<quizModel.getAnswers().size(); i++) {
             addAnswer(quizModel.getAnswers().get(i).getAnswerContent());
@@ -343,6 +427,8 @@ public class QuizView extends RelativeLayout {
         for (int i=0; i<quizModel.getAnswers().size(); i++) {
             if(!quizModel.getAnswers().get(i).isTrue() && quizModel.getAnswers().get(i).isUserChoice) {
                 mAnswerViews.get(i).setBackground(mFalseDrawable);
+                TextView textView = mAnswerViews.get(i).getAnswerTextView();
+                textView.setText(Html.fromHtml("<strike>" + textView.getText().toString() + "</strike>"));
             }
         }
     }
@@ -362,5 +448,9 @@ public class QuizView extends RelativeLayout {
 
     public void setIsShowResult(boolean isShow) {
         mIsShowResult = isShow;
+    }
+
+    public interface BackListener {
+        void onBack();
     }
 }
