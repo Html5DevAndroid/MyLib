@@ -168,6 +168,11 @@ public class TopicView2 extends MyRecyclerView {
         setSize(mItems.size());
     }
 
+    public void clear() {
+        mItems = new ArrayList<>();
+        setSize(mItems.size());
+    }
+
     public class Item2 {
         String imageUrl;
         String title;
