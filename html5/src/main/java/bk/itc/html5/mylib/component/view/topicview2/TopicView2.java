@@ -123,7 +123,6 @@ public class TopicView2 extends MyRecyclerView {
                 title.setTextColor(mTitleColor);
                 snippet.setTextColor(mSnippetColor);
                 snippet.setTextSize(mSnippetSize);
-                button.setText(mActionText);
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -143,6 +142,7 @@ public class TopicView2 extends MyRecyclerView {
                 final ImageView image = (ImageView) view.findViewById(R.id.topic_item_2_image);
                 TextView title = (TextView) view.findViewById(R.id.topic_item_2_title);
                 TextView snippet = (TextView) view.findViewById(R.id.topic_item_2_snippet);
+                FancyButton button = (FancyButton) view.findViewById(R.id.topic_item_2_button);
 
                 Glide.with(getContext()).load(mItems.get(position).imageUrl).listener(new RequestListener<Drawable>() {
                     @Override
@@ -159,6 +159,7 @@ public class TopicView2 extends MyRecyclerView {
 
                 title.setText(mItems.get(position).title);
                 snippet.setText(mItems.get(position).snippet);
+                button.setText(mActionText);
             }
         });
     }
