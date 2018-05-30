@@ -140,10 +140,7 @@ public class QuizView extends RelativeLayout {
 
             @Override
             public void onRetake() {
-                mQuizAdapter.clearAllUserAnswer();
-                mResultView.setVisibility(GONE);
-                mViewMode = VIEW_MOD_NORMAL;
-                goTo(0);
+                refresh();
             }
 
             @Override
@@ -153,6 +150,13 @@ public class QuizView extends RelativeLayout {
                 }
             }
         });
+    }
+
+    public void refresh() {
+        mQuizAdapter.clearAllUserAnswer();
+        mResultView.setVisibility(GONE);
+        mViewMode = VIEW_MOD_NORMAL;
+        goTo(0);
     }
 
     public void setBackListener(BackListener listener) {
