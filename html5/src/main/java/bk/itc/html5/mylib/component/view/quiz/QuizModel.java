@@ -11,6 +11,8 @@ import java.util.List;
 
 public class QuizModel {
     String questionContent;
+    String questionImage;
+    String questionMp3;
     List<QuizAnswerModel> answers = new ArrayList<>();
 
     public String getQuestionContent() {
@@ -27,5 +29,21 @@ public class QuizModel {
 
     public void setAnswers(List<QuizAnswerModel> answers) {
         this.answers = answers;
+    }
+
+    public String getQuestionImage() {
+        return questionImage;
+    }
+
+    public void setQuestionImage(String questionImage) {
+        this.questionImage = questionImage;
+    }
+
+    public String getQuestionMp3() {
+        return questionMp3;
+    }
+
+    public void setQuestionMp3(String questionMp3) {
+        this.questionMp3 = questionMp3;
     }
 }

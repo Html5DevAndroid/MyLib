@@ -4,17 +4,23 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -25,6 +31,7 @@ import bk.itc.html5.mylib.R;
 import bk.itc.html5.mylib.component.util.DimenUtil;
 import bk.itc.html5.mylib.component.util.DrawableUtil;
 import mehdi.sakout.fancybuttons.FancyButton;
+import nl.changer.audiowife.AudioWife;
 
 /**
  * Created by Hien on 5/19/2018.
@@ -33,6 +40,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 public class QuizView extends RelativeLayout {
     private TextView mQuestionStt;
     private TextView mQuestionContent;
+    private ImageView mQuestionImage;
+    private WebView mAudioView;
     private List<QuizAnswerView> mAnswerViews = new ArrayList<>();
     private LinearLayout mLinerLayout;
     private LinearLayout mQuestionLayout;
@@ -129,6 +138,19 @@ public class QuizView extends RelativeLayout {
         mQuestionContent = new TextView((getContext()));
         mQuestionContent.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mQuestionLayout.addView(mQuestionContent);
+
+        mQuestionImage = new ImageView(getContext());
+        mQuestionImage.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mQuestionImage.setScaleType(ImageView.ScaleType.FIT_XY);
+        mQuestionImage.setAdjustViewBounds(true);
+        mQuestionLayout.addView(mQuestionImage);
+        mQuestionImage.setPadding(0, (int) DimenUtil.pxFromDp(10), 0, 0);
+
+        mAudioView = new WebView(getContext());
+        mAudioView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        mQuestionLayout.addView(mAudioView);
+        mAudioView.setPadding(0, (int) DimenUtil.pxFromDp(10), 0, 0);
+        mAudioView.getSettings().setJavaScriptEnabled(true);
 
         mResultView.setListener(new ResultView.Listener() {
             @Override
@@ -391,6 +413,18 @@ public class QuizView extends RelativeLayout {
 
         setStt("Question " + String.valueOf(stt+1));
         setQuestion(quizModel.getQuestionContent());
+        if(quizModel.getQuestionImage() != null) {
+            Glide.with(getContext()).load(quizModel.getQuestionImage()).into(mQuestionImage);
+            mQuestionImage.setVisibility(VISIBLE);
+        } else {
+            mQuestionImage.setVisibility(GONE);
+        }
+        if(quizModel.getQuestionMp3() != null) {
+            mAudioView.setVisibility(VISIBLE);
+            mAudioView.loadDataWithBaseURL("", quizModel.getQuestionMp3(), "text/html", "UTF-8", "");
+        }else {
+            mAudioView.setVisibility(GONE);
+        }
         for (int i=0; i<quizModel.getAnswers().size(); i++) {
             addAnswer(quizModel.getAnswers().get(i).getAnswerContent());
         }

@@ -43,6 +43,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.4'
     implementation 'com.github.medyo:fancybuttons:1.8.4'
     implementation 'com.github.flepsik:progress-ring-view:1.1.2'
+    compile 'net.the4thdimension:audio-wife:1.0.3'
 }
 
 configurations.all {
